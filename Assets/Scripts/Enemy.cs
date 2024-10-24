@@ -1,13 +1,12 @@
 using Assets.Scripts;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDestroyableObject
 {
     public float Healt = 10;
     public float Speed = 3;
-    private float _currentSpeed = 3;
+    public float PointsForKill = 10;
 
     public GameObject BulletPrefab;
     public Transform LaunchOffset;
@@ -16,6 +15,7 @@ public class Enemy : MonoBehaviour, IDestroyableObject
 
     private Vector3 _startPosition;
     private Vector3 _endPosition;
+    private float _currentSpeed = 3;
 
     void Start()
     {
@@ -52,18 +52,15 @@ public class Enemy : MonoBehaviour, IDestroyableObject
         {
             Instantiate(BulletPrefab, LaunchOffset.position, LaunchOffset.rotation);
         }
-        
     }
 
     private bool CanShoot()
     {
-        Debug.Log("HI");
         Vector3 direction = -transform.up;
 
         RaycastHit hit;
         if (Physics.Raycast(LaunchOffset.position, direction, out hit, 4f))
         {
-            Debug.Log(hit.collider.tag);
             if (hit.collider.CompareTag("enemy"))
             {
                 return false;
@@ -79,6 +76,7 @@ public class Enemy : MonoBehaviour, IDestroyableObject
         if(Healt<=0)
         {
             Destroy(gameObject);
+            Actions.OnEnemyKilled(PointsForKill);
         }
     }
 }

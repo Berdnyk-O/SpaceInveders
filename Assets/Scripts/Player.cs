@@ -31,6 +31,7 @@ public class Player : MonoBehaviour, IDestroyableObject
         if (Healt <= 0)
         {
             Destroy(gameObject);
+            Actions.OnEndGame("Game Over");
         }
     }
 }
