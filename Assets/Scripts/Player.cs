@@ -7,14 +7,12 @@ public class Player : MonoBehaviour
 
     private float _speed = 8f;
 
-    [SerializeField] private Rigidbody2D _rigidbody;
+    [SerializeField] private Rigidbody _rigidbody;
 
     private void Update()
     {
-
         if (Input.GetButtonDown("Jump"))
         {
-            Debug.LogWarning("Fire)");
             Instantiate(BulletPrefab, LaunchOffset.position, transform.rotation);
         }
     }
