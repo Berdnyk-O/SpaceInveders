@@ -1,9 +1,11 @@
+using Assets.Scripts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IDestroyableObject
 {
+    public float Healt = 10;
     public float Speed = 3;
     private float _currentSpeed = 3;
 
@@ -20,7 +22,7 @@ public class Enemy : MonoBehaviour
         _currentSpeed = Speed;
         _startPosition = transform.position;
         _endPosition = transform.position+RelativePosition;
-        InvokeRepeating("TryShoot", 2,2);
+        InvokeRepeating("TryShoot", Random.Range(2,5), Random.Range(2, 5));
     }
 
     void Update()
@@ -53,7 +55,7 @@ public class Enemy : MonoBehaviour
         
     }
 
-    bool CanShoot()
+    private bool CanShoot()
     {
         Debug.Log("HI");
         Vector3 direction = -transform.up;
@@ -69,5 +71,14 @@ public class Enemy : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        Healt-=damage;
+        if(Healt<=0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

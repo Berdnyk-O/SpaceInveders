@@ -1,8 +1,11 @@
+using Assets.Scripts;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
     public float Speed = 4f;
+
+    private float _damage = 10;
 
     void Update()
     {
@@ -12,9 +15,9 @@ public class Bullet : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Destroy(gameObject);
-        if(collision.collider.tag == "enemy")
+        if (collision.gameObject.TryGetComponent(out IDestroyableObject enemy))
         {
-            Destroy(collision.gameObject);
+            enemy.TakeDamage(_damage);
         }
     }
 }

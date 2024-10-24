@@ -1,7 +1,10 @@
+using Assets.Scripts;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDestroyableObject
 {
+    public float Healt = 30;
+
     public GameObject BulletPrefab;
     public Transform LaunchOffset;
 
@@ -20,5 +23,14 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         _rigidbody.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * _speed, _rigidbody.velocity.y);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        Healt -= damage;
+        if (Healt <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
